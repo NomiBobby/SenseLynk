@@ -3,7 +3,7 @@ import { AiOutlineCalendar, AiOutlineShoppingCart, AiOutlineAreaChart, AiOutline
 import { FiShoppingBag, FiEdit, FiPieChart, FiCreditCard, FiStar, FiShoppingCart } from 'react-icons/fi';
 import { BsKanban, BsBarChart, BsBoxSeam, BsCurrencyDollar, BsShield, BsChatLeft } from 'react-icons/bs';
 import { BiColorFill } from 'react-icons/bi';
-import { IoMdContacts } from 'react-icons/io';
+import { IoMdContacts, IoIosGlobe } from 'react-icons/io';
 import { RiContactsLine, RiStockLine } from 'react-icons/ri';
 import { MdBatteryChargingFull } from "react-icons/md";
 import { IoWifiSharp } from "react-icons/io5";
@@ -614,12 +614,12 @@ export const chatData = [
   },
 ];
 
-export const earningData = [
+export const gateWayInfo = [
   {
-    icon: <MdBatteryChargingFull />,
-    amount: '3.3 V',
+    icon: <IoIosGlobe />,
+    amount: '192.168.0.167',
     percentage: '-4%',
-    title: 'Battery Voltage',
+    title: 'IP Address',
     iconColor: '#03C9D7',
     iconBg: '#E5FAFB',
     pcColor: 'red-600',
@@ -632,6 +632,15 @@ export const earningData = [
     iconColor: 'rgb(255, 244, 229)',
     iconBg: 'rgb(254, 201, 15)',
     pcColor: 'green-600',
+  },
+  {
+    icon: <MdBatteryChargingFull />,
+    amount: '3.3 V',
+    percentage: '-4%',
+    title: 'Battery Voltage',
+    iconColor: '#03C9D7',
+    iconBg: '#E5FAFB',
+    pcColor: 'red-600',
   },
   {
     icon: <TbTopologyStar />,
