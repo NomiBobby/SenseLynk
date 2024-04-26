@@ -19,13 +19,9 @@ const Gateway = () => {
                 {item.icon}
               </button>
               <p className='mt-3'>
-                {/* <span className='text-lg font-semibold'> */}
                 <span className='text-lg font-semibold' style={{ fontSize: `clamp(12px, 2vw, 20px)` }}> {/* Adjusted font size using clamp() */}
                   {item.amount}
                 </span>
-                {/* <span className={`text-sm text-${item.pcColor} ml-2`}>
-                  {item.percentage}
-                </span> */}
               </p>
               <p className='text-sm text-gray-400 mt-1'>{item.title}</p>
             </div>
