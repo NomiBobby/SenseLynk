@@ -24,6 +24,21 @@ import product6 from './product6.jpg';
 import product7 from './product7.jpg';
 import product8 from './product8.jpg';
 
+export const notifications = [
+  {
+    title: "Your call has been confirmed.",
+    description: "1 hour ago",
+  },
+  {
+    title: "You have a new message!",
+    description: "1 hour ago",
+  },
+  {
+    title: "Your subscription is expiring soon!",
+    description: "2 hours ago",
+  },
+]
+
 export const gridOrderImage = (props) => (
   <div>
     <img

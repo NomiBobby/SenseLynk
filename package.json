@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-switch": "^1.0.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.376.0",
@@ -19,7 +21,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
-  },  
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
