@@ -1,88 +1,88 @@
 import React from 'react'
-import { gateWayInfo, notifications} from '../data/dummy';
-import { useStateContext } from '../contexts/ContextProvider';
-import { employeesData, employeesGrid } from '../data/dummy';
+// import { gateWayInfo} from '../data/dummy';
+// import { useStateContext } from '../contexts/ContextProvider';
 
-import { BellRing, Check } from "lucide-react"
-import { cn } from "../lib/utils"
-import { Button } from "../components/button"
+import {
+  Activity,
+  ArrowUpRight,
+  CircleUser,
+  CreditCard,
+  DollarSign,
+  Menu,
+  Package2,
+  Search,
+  Users,
+  Radio,
+  GlobeLock,
+  BatteryCharging,
+} from "lucide-react"
+
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
-} from "../components/card"
-import { Switch } from "../components/switch"
+} from "@/components/ui/card"
 
 const Gateway = () => {
-
   return (
-    <div className='mt-5'>
-      <div className='flex flex-wrap lg:flex-nowrap justify-center'>
-        <div className='flex m-3 ml-10 flex-wrap justify-start gap-4 items-center'>
-          {gateWayInfo.map((item)=>(
-            <div key={item.title} className='bg-white dark:text-gray-200 dark:bg-secondary-dark-bg w-full md:w-56 p-4 pt-9 rounded-2xl lg:w-56'>
-              <button type='button' style={{ color: item.iconColor, backgroundColor: item.iconBg, }} className='text-2xl opacity-0.9 rounded-full p-4 hover:drop-shadow-xl'>
-                {item.icon}
-              </button>
-              <p className='mt-3'>
-                <span className='text-lg font-semibold' style={{ fontSize: `clamp(12px, 2vw, 20px)` }}> {/* Adjusted font size using clamp() */}
-                  {item.amount}
-                </span>
-              </p>
-              <p className='text-sm text-gray-400 mt-1'>{item.title}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div>
-        <Card className={cn("w-[380px]", "")} >
-          <CardHeader>
-            <CardTitle>Notifications</CardTitle>
-            <CardDescription>You have 3 unread messages.</CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className=" flex items-center space-x-4 rounded-md border p-4">
-              <BellRing />
-              <div className="flex-1 space-y-1">
-                <p className="text-sm font-medium leading-none">
-                  Push Notifications
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Send notifications to device.
-                </p>
-              </div>
-              <Switch />
-            </div>
-            <div>
-              {notifications.map((notification, index) => (
-                <div
-                  key={index}
-                  className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
-                >
-                  <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium leading-none">
-                      {notification.title}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {notification.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button className="w-full">
-              <Check className="mr-2 h-4 w-4" /> Mark all as read
-            </Button>
-          </CardFooter>
-        </Card>
-      </div>
-    </div>
+    <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+      <Card x-chunk="dashboard-01-chunk-0">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">
+            IP Addresss
+          </CardTitle>
+          <GlobeLock className="h-6 w-6 text-muted-foreground" />
+        </CardHeader>
+        <CardContent className='flex justify-between'>
+          <div>
+            <div className="text-2xl font-bold">192.168.0.167</div>
+            <p className="text-xs text-muted-foreground">
+              +20.1% from last month
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+      <Card x-chunk="dashboard-01-chunk-1">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">
+            Battery Voltage
+          </CardTitle>
+          <BatteryCharging className="h-6 w-6 text-muted-foreground" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">4.2V</div>
+          <p className="text-xs text-muted-foreground">
+            99% Full
+          </p>
+        </CardContent>
+      </Card>
+      <Card x-chunk="dashboard-01-chunk-2">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">LoRaWan</CardTitle>
+          <Radio className="h-6 w-6 text-muted-foreground" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">50 Nodes</div>
+          <p className="text-xs text-muted-foreground">
+            2 offline
+          </p>
+        </CardContent>
+      </Card>
+      <Card x-chunk="dashboard-01-chunk-3">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">Sensors</CardTitle>
+          <Activity className="h-6 w-6 text-muted-foreground" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">573</div>
+          <p className="text-xs text-muted-foreground">
+            15 offline
+          </p>
+        </CardContent>
+      </Card>
+  </div>
   )
 }
 
