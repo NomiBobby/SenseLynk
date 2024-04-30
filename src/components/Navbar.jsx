@@ -57,7 +57,7 @@ const Navbar = () => {
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Settings
+            Files
           </Link>
         </nav>
         <Sheet>
