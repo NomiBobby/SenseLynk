@@ -25,7 +25,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-// import { DataTable } from '@/components'
+import { DataTable } from '@/components'
 
 const Gateway = () => {
   return (
@@ -86,7 +86,7 @@ const Gateway = () => {
           </CardContent>
         </Card>
       </div>
-      {/* <DataTable></DataTable> */}
+      <DataTable></DataTable>
     </>
   )
 }
