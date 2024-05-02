@@ -1,17 +1,7 @@
-import React from 'react'
-// import { gateWayInfo} from '../data/dummy';
-// import { useStateContext } from '../contexts/ContextProvider';
+import React, {useState, useEffect} from 'react'
 
 import {
   Activity,
-  ArrowUpRight,
-  CircleUser,
-  CreditCard,
-  DollarSign,
-  Menu,
-  Package2,
-  Search,
-  Users,
   Radio,
   GlobeLock,
   BatteryCharging,
@@ -20,7 +10,6 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -29,21 +18,29 @@ import { DataTable } from '@/components'
 
 const Gateway = () => {
 
-  fetch('/api/gateway-info')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
+  const [gatewayInfo, setGatewayInfo] = useState([]);
+
+  useEffect(() => {
+    const fetchData = () => {
+      fetch('/api/gateway-info')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // console.log(data);
+        setGatewayInfo(data)
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
     }
-    return response.json();
-  })
-  .then(data => {
-    // Work with the fetched data here
-    console.log(data);
-  })
-  .catch(error => {
-    // Handle errors here
-    console.error('There was a problem with the fetch operation:', error);
-  });
+      fetchData();
+      const intervalId = setInterval(fetchData, 1000);
+      return () => clearInterval(intervalId);
+  }, [])
 
   return (
     <div>
@@ -57,7 +54,7 @@ const Gateway = () => {
           </CardHeader>
           <CardContent className='flex justify-between'>
             <div>
-              <div className="text-2xl font-bold">192.168.0.167</div>
+              <div className="text-2xl font-bold">{gatewayInfo.map(info => { return info ? info.ip : 'loading' })}</div>
               <p className="text-xs text-muted-foreground">
                 +20.1% from last month
               </p>
@@ -72,7 +69,7 @@ const Gateway = () => {
           <BatteryCharging className="h-6 w-6 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-            <div className="text-2xl font-bold">4.2V</div>
+            <div className="text-2xl font-bold">{gatewayInfo.map(info => { return info ? info.voltage : 'loading' })}</div>
             <p className="text-xs text-muted-foreground">
               99% Full
             </p>
@@ -84,9 +81,9 @@ const Gateway = () => {
             <Radio className="h-6 w-6 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">50 Nodes</div>
+            <div className="text-2xl font-bold">{gatewayInfo.map(info => { return info ? info.lora_count : 'loading' })}</div>
             <p className="text-xs text-muted-foreground">
-              2 offline
+              {gatewayInfo.map(info => { return info ? info.offline_lora_count : 'loading' })} offline
             </p>
           </CardContent>
         </Card>
@@ -96,9 +93,9 @@ const Gateway = () => {
             <Activity className="h-6 w-6 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">573</div>
+            <div className="text-2xl font-bold">{gatewayInfo.map(info => { return info ? info.sensors_count : 'loading' })}</div>
             <p className="text-xs text-muted-foreground">
-              15 offline
+            {gatewayInfo.map(info => { return info ? info.offline_sensors_count : 'loading' })} offline
             </p>
           </CardContent>
         </Card>
@@ -126,6 +123,3 @@ const Gateway = () => {
 }
 
 export default Gateway
-
-// grid-template-columns: 22% 22% auto;
-// grid-template-rows: 22% auto 22%;
