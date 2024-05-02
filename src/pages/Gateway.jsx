@@ -28,9 +28,26 @@ import {
 import { DataTable } from '@/components'
 
 const Gateway = () => {
+
+  fetch('/api/gateway-info')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    // Work with the fetched data here
+    console.log(data);
+  })
+  .catch(error => {
+    // Handle errors here
+    console.error('There was a problem with the fetch operation:', error);
+  });
+
   return (
-    <>
-      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+    <div>
+      <div className="grid gap-4 md:grid-cols-2 md:gap-4 lg:grid-cols-4">
         <Card x-chunk="dashboard-01-chunk-0">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
@@ -86,9 +103,29 @@ const Gateway = () => {
           </CardContent>
         </Card>
       </div>
-      <DataTable></DataTable>
-    </>
+      <div className="mt-4 gap-4 grid md:grid-cols-1 md:gap-4 lg:grid-cols-3">
+        <Card className="lg:col-span-2" x-chunk="dashboard-01-chunk-3">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-2xl font-bold">LoRaWAN</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DataTable></DataTable>
+            </CardContent>
+        </Card>
+        <Card className="lg:col-span-1" x-chunk="dashboard-01-chunk-3">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-2xl font-bold">Events</CardTitle>
+            </CardHeader>
+            <CardContent>
+              Events
+            </CardContent>
+        </Card>
+      </div>
+    </div>
   )
 }
 
 export default Gateway
+
+// grid-template-columns: 22% 22% auto;
+// grid-template-rows: 22% auto 22%;
