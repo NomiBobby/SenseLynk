@@ -1,86 +1,81 @@
 import React, { useMemo } from 'react'
 import { useTable, useGlobalFilter, useFilters } from 'react-table'
-import {GlobalFilter} from './GlobalFilter.js'
-import MOCK_DATA from './MOCK_DATA'
+import { GlobalFilter } from './GlobalFilter'
+import { ColumnFilter } from './ColumnFilter'
 import { COLUMNS } from './columns'
-import { ColumnFilter } from './ColumnFilter.js'
-import './table.css'
+import MOCK_DATA from './MOCK_DATA'
+// import './table.css'
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 export const DataTable = () => {
 
-    // const columns = useMemo(()=> COLUMNS, []);
-    const columns = useMemo(()=> COLUMNS, []);
-    const data = useMemo(()=> MOCK_DATA, []);
+  const columns = useMemo(()=> COLUMNS, []);
+  const data = useMemo(()=> MOCK_DATA, []);
+  const defaultColumn = useMemo(() => {
+    return  {
+        Filter: ColumnFilter
+    }
+  }, [])
 
-    const defaultColumn = useMemo(() => {
-        return  {
-            Filter: ColumnFilter
-        }
-    }, [])
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    footerGroups,
+    rows,
+    prepareRow,
+    state,
+    setGlobalFilter
+  } = useTable({
+        columns,
+        data,
+        defaultColumn,
+  }, useGlobalFilter, useFilters)
 
-    const { getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        footerGroups,
-        rows,
-        prepareRow,
-        state,
-        setGlobalFilter
-    } = useTable({
-            columns,
-            data,
-            defaultColumn,
-        }, useGlobalFilter, useFilters)
-
-    const { globalFilter } = state;
+  const { globalFilter } = state;
 
   return (
-    <>
+    <div className="flex-row">
+      <div className='mb-3'>
         <GlobalFilter filter={globalFilter} setFilter = {setGlobalFilter} />
-        <table {...getTableProps()}>
-            <thead>
+      </div>
+      <div className='rounded-md border'>
+        <Table {...getTableProps()}>
+            <TableHeader>
                 {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
+                    <TableRow {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map((column)=>(
-                            <th {...column.getHeaderProps()}>
+                            <TableHead {...column.getHeaderProps()}>
                                 {column.render('Header')}
-                                <div> {column.canFilter ? column.render('Filter'): null} </div>
-                            </th>
+                                {/* <div> {column.canFilter ? column.render('Filter'): null} </div> */}
+                            </TableHead>
                         ))}
-                    </tr>
+                    </TableRow>
                 ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
+            </TableHeader>
+            <TableBody {...getTableBodyProps()}>
                 {rows.map((row) =>{
                     prepareRow(row);
                     return(
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map((cell)=>{
-                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                            })}
-                        </tr>
+                      <TableRow {...row.getRowProps()}>
+                          {row.cells.map((cell)=>{
+                              return <TableCell {...cell.getCellProps()}>{cell.render('Cell')}</TableCell>
+                          })}
+                      </TableRow>
                     )
                 })}
-            </tbody>
-            <tfoot>
-                {
-                    footerGroups.map((footerGroup) =>(
-                        <tr {...footerGroup.getFooterGroupProps()}>
-                            {
-                                footerGroup.headers.map(column => (
-                                    <td {...column.getFooterProps}>
-                                        {
-                                            column.render('Footer')
-                                        }
-                                    </td>
-                                ))
-                            }
-                        </tr>
-                    ))
-                }
-            </tfoot>
-        </table>
-    </>
+            </TableBody>
+        </Table>
+      </div>
+    </div>
   )
 }
 

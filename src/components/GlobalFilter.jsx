@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useAsyncDebounce } from 'react-table'
+import { Input } from '@/components/ui/input'
+
 
 export const GlobalFilter = ( { filter, setFilter} ) => {
 
@@ -7,16 +9,14 @@ export const GlobalFilter = ( { filter, setFilter} ) => {
 
   const onChange = useAsyncDebounce(() => {
     setFilter(value || undefined);
-  }, 1000)
+  }, 500)
 
   return (
-    <span>
-        Search: { ' ' }
-        <input value={value || ''} onChange = {(e) => 
-        {
-          setValue(e.target.value)
-          onChange(e.target.value);
-        }} />
-    </span>
+    <Input placeholder="Search" value={value || ''} onChange = {(e) => 
+    {
+      setValue(e.target.value)
+      onChange(e.target.value);
+    }} className=""
+    />
   )
 }
