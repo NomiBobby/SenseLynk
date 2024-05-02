@@ -26,3 +26,11 @@ Configuration with vanilla React requires a dummy `tsconfig.json` file, and @ al
 ```
 
 ## REST API
+### Proxy for Development Environment
+One important part of development is to test the api with the backend. However, the backend is most likely also in development on the same machine. This means the react app server and the backend server are on different ports, but the ip address would both the 127.0.0.1 or localhost. If we use `fetch` in react, it would send the request to the react server port, instead of the backend server port. There are multiple ways to resove this, such as adding CORS to the backend, however, using proxy is tested in this project. To set up proxy, add the following into `package.json` in the react app directory. This will ensure the api call be directed to the backend server.
+```
+  // Mac OS
+  "proxy": "http://127.0.0.1:5000",
+  // Windows
+  "proxy": "http://localhost:5000",
+```
