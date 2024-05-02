@@ -57,6 +57,12 @@ const Navbar = () => {
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
+            Map
+          </Link>
+          <Link
+            href="#"
+            className="text-muted-foreground transition-colors hover:text-foreground"
+          >
             Files
           </Link>
         </nav>
