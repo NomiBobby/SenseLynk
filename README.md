@@ -34,3 +34,6 @@ One important part of development is to test the api with the backend. However, 
   // Windows
   "proxy": "http://localhost:5000",
 ```
+
+## Bundle Size Management
+Use gzip to compress js files and serve on embedded systems. Not that mobile devices seems to download the .gz file and do not decompress it, a workaround is to change the file extension to fool the mobile browser but still send the corresponding header file.
