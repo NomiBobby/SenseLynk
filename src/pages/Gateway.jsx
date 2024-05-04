@@ -14,15 +14,30 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+import { Button } from '../components/ui/button'
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog"
+
 import { DataTable } from '@/components'
+
+import { SimpleLineChart } from '../components'
 
 const Gateway = () => {
 
   const [gatewayInfo, setGatewayInfo] = useState([]);
+  const [voltageHistory, setVoltageHistory] = useState([]);
 
   useEffect(() => {
     const fetchData = () => {
-      fetch('/api/gateway-info')
+      fetch('/api/gateway-metadata')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -38,7 +53,29 @@ const Gateway = () => {
       });
     }
       fetchData();
-      const intervalId = setInterval(fetchData, 1000);
+      const intervalId = setInterval(fetchData, 100000);
+      return () => clearInterval(intervalId);
+  }, [])
+
+  useEffect(() => {
+    const fetchData = () => {
+      fetch('/api/voltage-history')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // console.log(data);
+        setVoltageHistory(data)
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+    }
+      fetchData();
+      const intervalId = setInterval(fetchData, 100000);
       return () => clearInterval(intervalId);
   }, [])
 
@@ -61,20 +98,42 @@ const Gateway = () => {
             </div>
           </CardContent>
         </Card>
-        <Card x-chunk="dashboard-01-chunk-1">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
-            Battery Voltage
-          </CardTitle>
-          <BatteryCharging className="h-6 w-6 text-muted-foreground" />
-        </CardHeader>
-        <CardContent>
-            <div className="text-2xl font-bold">{gatewayInfo.map(info => { return info ? info.voltage : 'loading' })}</div>
-            <p className="text-xs text-muted-foreground">
-              99% Full
-            </p>
-          </CardContent>
-        </Card>
+
+        <Dialog>
+          <DialogTrigger asChild>
+            <Card x-chunk="dashboard-01-chunk-1" className="cursor-pointer">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Battery Voltage
+              </CardTitle>
+              <BatteryCharging className="h-6 w-6 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+                <div className="text-2xl font-bold">{gatewayInfo.map(info => { return info ? info.voltage : 'loading' })}</div>
+                <p className="text-xs text-muted-foreground">
+                  99% Full
+                </p>
+              </CardContent>
+            </Card>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Battery Voltage</DialogTitle>
+              <DialogDescription>
+                {/* Make changes to your profile here. Click save when you're done. */}
+              </DialogDescription>
+            </DialogHeader>
+            <div className=" h-60 md:h-72">
+              <SimpleLineChart data={voltageHistory} x={"time"} y={"voltage"} />
+            </div>
+            <DialogFooter className="flex flex-row">
+              <Button variant="outline" type="submit">1D</Button>
+              <Button variant="outline" type="submit">5D</Button>
+              <Button variant="outline" type="submit">1M</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
         <Card x-chunk="dashboard-01-chunk-2">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">LoRaWan</CardTitle>
