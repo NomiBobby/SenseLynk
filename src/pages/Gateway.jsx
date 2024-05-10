@@ -49,7 +49,7 @@ const Gateway = () => {
         setGatewayInfo(data)
       })
       .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
+        console.error('There was a problem with the fetch operation for gateway info:', error);
       });
     }
       fetchData();
@@ -71,7 +71,7 @@ const Gateway = () => {
         setVoltageHistory(data)
       })
       .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
+        console.error('There was a problem with the fetch operation for voltage-history:', error);
       });
     }
       fetchData();
@@ -93,7 +93,7 @@ const Gateway = () => {
             <div>
               <div className="text-2xl font-bold">{gatewayInfo.map(info => { return info ? info.ip : 'loading' })}</div>
               <p className="text-xs text-muted-foreground">
-                +20.1% from last month
+                {gatewayInfo.map(info => { return info ? info.macAddress : 'loading' })}
               </p>
             </div>
           </CardContent>
@@ -109,9 +109,12 @@ const Gateway = () => {
               <BatteryCharging className="h-6 w-6 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-                <div className="text-2xl font-bold">{gatewayInfo.map(info => { return info ? info.voltage : 'loading' })}</div>
+                <div className="text-2xl font-bold">{gatewayInfo.map(info => { return info ? info.batteryVoltage : 'loading' })}</div>
                 <p className="text-xs text-muted-foreground">
-                  99% Full
+                  {gatewayInfo.map(info => {
+                      const batteryVoltage = parseFloat(info.batteryVoltage);
+                      return !isNaN(batteryVoltage) ? `${Math.floor((batteryVoltage / 4.2) * 100)}%` : 'loading';
+                  })}
                 </p>
               </CardContent>
             </Card>
