@@ -91,9 +91,12 @@ const Home = () => {
           </CardHeader>
           <CardContent className='flex justify-between'>
             <div>
-              <div className="text-2xl font-bold">{gatewayInfo.map(info => { return info ? info.ip : 'loading' })}</div>
+              <div className="text-2xl font-bold">Gateway</div>
               <p className="text-xs text-muted-foreground">
-                {gatewayInfo.map(info => { return info ? info.macAddress : 'loading' })}
+                IP: {gatewayInfo.map(info => { return info ? info.ip : 'loading' })}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                MAC: {gatewayInfo.map(info => { return info ? info.macAddress : 'loading' })}
               </p>
             </div>
           </CardContent>
@@ -115,6 +118,9 @@ const Home = () => {
                       const batteryVoltage = parseFloat(info.batteryVoltage);
                       return !isNaN(batteryVoltage) ? `${Math.floor((batteryVoltage / 4.2) * 100)}%` : 'loading';
                   })}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Status: charging
                 </p>
               </CardContent>
             </Card>
@@ -139,13 +145,16 @@ const Home = () => {
 
         <Card x-chunk="dashboard-01-chunk-2">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">LoRa</CardTitle>
+          <CardTitle className="text-sm font-medium">LoRa Network</CardTitle>
             <Radio className="h-6 w-6 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{gatewayInfo.map(info => { return info ? info.lora_count : 'loading' })}</div>
+            <div className="text-2xl font-bold">Online{gatewayInfo.map(info => { return info ? info.lora_count : 'loading' })}</div>
             <p className="text-xs text-muted-foreground">
-              {gatewayInfo.map(info => { return info ? info.offline_lora_count : 'loading' })} offline
+              Connected to:{gatewayInfo.map(info => { return info ? info.offline_lora_count : 'loading' })} offline
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Last communication: 2024-06-30 00:00
             </p>
           </CardContent>
         </Card>
@@ -155,14 +164,14 @@ const Home = () => {
             <Activity className="h-6 w-6 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{gatewayInfo.map(info => { return info ? info.sensors_count : 'loading' })}</div>
+            <div className="text-2xl font-bold">3 days 5 hours{gatewayInfo.map(info => { return info ? info.sensors_count : 'loading' })}</div>
             <p className="text-xs text-muted-foreground">
-            {gatewayInfo.map(info => { return info ? info.offline_sensors_count : 'loading' })} offline
+            Last restart time:{gatewayInfo.map(info => { return info ? info.offline_sensors_count : 'loading' })} offline
             </p>
           </CardContent>
         </Card>
       </div>
-      <div className="mt-4 gap-4 grid md:grid-cols-1 md:gap-4 lg:grid-cols-1">
+      <div className="hidden mt-4 gap-4 md:grid md:grid-cols-1 md:gap-4 lg:grid-cols-1">
         <Card className="lg:col-span-2" x-chunk="dashboard-01-chunk-3">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-2xl font-bold">Sensors</CardTitle>
